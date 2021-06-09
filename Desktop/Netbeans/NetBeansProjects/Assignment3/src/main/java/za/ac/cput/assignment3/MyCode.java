@@ -27,7 +27,7 @@ ArrayList<Customer> customers= new ArrayList<Customer>();
 ArrayList<Supplier> suppliers= new ArrayList<Supplier>();
 
 
-//2a
+
     public void openFile(){
         try{
             display = new ObjectInputStream( new FileInputStream( "stakeholder.ser" ) ); 
@@ -76,19 +76,19 @@ ArrayList<Supplier> suppliers= new ArrayList<Supplier>();
             System.exit(1);
         }
     }
-    //2b
+    
     public void sortCustomerDetails(){
-        String[] sortID = new String[customers.size()];
+        String[] sortJL = new String[customers.size()];
         ArrayList<Customer> sortJ= new ArrayList<Customer>();
         int count = customers.size();
         for (int a = 0; a < count; a++) {
-            sortID[a] = customers.get(a).getStHolderId();
+            sortJL[a] = customers.get(a).getStHolderId();
         }
-        Arrays.sort(sortID);
+        Arrays.sort(sortJL);
         
         for (int b = 0; b < count; b++) {
             for (int c = 0; c < count; c++) {
-                if (sortID[b].equals(customers.get(c).getStHolderId())){
+                if (sortJL[b].equals(customers.get(c).getStHolderId())){
                     sortJ.add(customers.get(c));
                 }
             }
@@ -97,18 +97,18 @@ ArrayList<Supplier> suppliers= new ArrayList<Supplier>();
         customers= sortJ;
     }
     
-    //2c
+    
     public int getAge(String dob){
         String[] seperation = dob.split("-");
         
-        LocalDate birth = LocalDate.of(Integer.parseInt(seperation[0]), Integer.parseInt(seperation[1]), Integer.parseInt(seperation[2]));
+        LocalDate birth = LocalDate.parse(dob, DateTimeFormatter.ISO_DATE);
         LocalDate current = LocalDate.now();
         Period difference = Period.between(birth, current);
         int age = difference.getYears();
         return age;
     }
     
-    //2d
+    
     public String formatDob(Customer dob){
         LocalDate dateOfBirthToFormat = LocalDate.parse(dob.getDateOfBirth());
         DateTimeFormatter changeFormat = DateTimeFormatter.ofPattern("dd MMM yyyy");
@@ -129,7 +129,7 @@ ArrayList<Supplier> suppliers= new ArrayList<Supplier>();
             }
             buffWriter.write(String.format("%s\n"," "));
             buffWriter.write(String.format("%s\n"," "));
-            buffWriter.write(String.format("%s\n",rent()));
+            buffWriter.write(String.format("%s\n",rentals()));
         }
         catch(IOException fnfe )
         {
@@ -144,38 +144,38 @@ ArrayList<Supplier> suppliers= new ArrayList<Supplier>();
             System.exit(1);
         }
     }
-    //2f
-    public String rent(){
-        int count = customers.size();
-        int canRent = 0;
-        int notRent = 0;
-        for (int i = 0; i < count; i++) {
+    
+    public String rentals(){
+        int counter = customers.size();
+        int canRentals = 0;
+        int notRentals = 0;
+        for (int i = 0; i < counter; i++) {
             if (customers.get(i).getCanRent()){
-                canRent++;
+                canRentals++;
             }else {
-                notRent++;
+                notRentals++;
             }
         }
-        String line = "Number of customers who can rent : "+ '\t' + canRent + '\n' + "Number of customers who cannot rent : "+ '\t' + notRent;
+        String line = "Number of customers who can rent : "+ '\t' + canRentals + '\n' + "Number of customers who cannot rent : "+ '\t' + notRentals;
         return line;
     }
     
     
     
     
-    //3a
+
     public void sortSupplierDetails(){
-        String[] sortID = new String[suppliers.size()];
+        String[] sortJL = new String[suppliers.size()];
         ArrayList<Supplier> sortJ= new ArrayList<Supplier>();
-        int count = suppliers.size();
-        for (int a = 0; a < count; a++) {
-            sortID[a] = suppliers.get(a).getName();
+        int counter = suppliers.size();
+        for (int a = 0; a < counter; a++) {
+            sortJL[a] = suppliers.get(a).getName();
         }
-        Arrays.sort(sortID);
+        Arrays.sort(sortJL);
         
-        for (int b = 0; b < count; b++) {
-            for (int j = 0; j < count; j++) {
-                if (sortID[b].equals(suppliers.get(j).getName())){
+        for (int b = 0; b < counter; b++) {
+            for (int j = 0; j < counter; j++) {
+                if (sortJL[b].equals(suppliers.get(j).getName())){
                     sortJ.add(suppliers.get(j));
                 }
             }
